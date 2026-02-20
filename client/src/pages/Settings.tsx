@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
-import { User, Globe, Tag, Plus, Trash2, Check, ChevronRight, Shield, Pencil, X } from 'lucide-react';
+import { User, Globe, Tag, Plus, Trash2, Check, ChevronRight, Shield, X } from 'lucide-react';
 
 const CURRENCIES: { code: string; name: string; symbol: string; flag: string }[] = [
     { code: 'USD', name: 'US Dollar', symbol: '$', flag: '🇺🇸' },
@@ -44,7 +44,7 @@ export default function Settings() {
     const [profile, setProfile] = useState({ displayName: user?.displayName || '', homeCurrency: user?.homeCurrency || 'USD' });
     const [newCategory, setNewCategory] = useState({ name: '', icon: 'tag', color: '#6366f1' });
     const [showCatForm, setShowCatForm] = useState(false);
-    const [editingName, setEditingName] = useState(false);
+
 
     const { data: categories } = useQuery({
         queryKey: ['categories'],
