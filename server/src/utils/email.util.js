@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
 const Mailgen = require("mailgen");
 
-const transporter = nodemailer.createTransport({
+// Lazy transporter — only created when actually needed
+const getTransporter = () => nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: parseInt(process.env.SMTP_PORT) || 587,
     secure: false,
@@ -33,7 +34,7 @@ const sendEmail = async ({ to, subject, body }) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
+        await getTransporter().sendMail(mailOptions);
         console.log(`📧 Email sent to ${to}`);
     } catch (err) {
         console.error("Email send error:", err.message);

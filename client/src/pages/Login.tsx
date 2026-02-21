@@ -30,7 +30,13 @@ export default function Login() {
             await login(data.email, data.password);
             navigate('/dashboard');
         } catch (err: any) {
-            toast.error(err.response?.data?.error || 'Login failed');
+            if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+                toast.error('Server is waking up, please try again in a moment ⏳');
+            } else if (!err.response) {
+                toast.error('Cannot reach server. Check your connection and try again.');
+            } else {
+                toast.error(err.response?.data?.error || 'Login failed');
+            }
         } finally {
             setLoading(false);
         }
